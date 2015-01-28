@@ -73,7 +73,7 @@ module.exports = {
                     ].join(' '));
 
                     //Add Material Description
-                    str.push('    facent material ' + facet.material);
+                    if (facet.material) str.push('    facet material ' + facet.material);
 
                     str.push('    outer loop');
                     var v = facet.verts;
@@ -93,7 +93,7 @@ module.exports = {
 
                     str.push('    outer loop');
                     //Add Material Description
-                    str.push('    facent material ' + facet.material);
+                    if (facet.material) str.push('    facet material ' + facet.material);
 
                     var v = facet.verts;
 
