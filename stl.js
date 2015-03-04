@@ -60,13 +60,33 @@ module.exports = {
             var str = [
                 'solid ' + obj.description.trim()
             ];
-
+            var facet = obj.facets;
+            var n = facet.normal || computeNormal(facet);
             var fl = obj.facets.length;
+            str.push('  facet normal ' + [
+                n[0], n[1], n[2]
+            ].join(' '));
 
-            for (var j = 0; j < fl; j++) {
+            //Add Material Description
+            if (facet.material) str.push('    facet material ' + facet.material);
+            
+            str.push('    outer loop');
+            var v = facet.verts;
+
+            var p = '      vertex ';
+            str.push(p + [v[0][0], v[0][1], v[0][2]].join(' '));
+            str.push(p + [v[1][0], v[1][1], v[1][2]].join(' '));
+            str.push(p + [v[2][0], v[2][1], v[2][2]].join(' '));
+
+            str.push('    endloop');
+            str.push('  endfacet');
+            str.push('endsolid');
+            return str.join('\n');
+            /*for (var j = 0; j < fl; j++) {
                 var facet = obj.facets[j];
                 var n = facet.normal || computeNormal(facet);
-
+                //add triangle Number to solid description
+                str[0] += ':' + j;
                 if (!exponential) {
                     str.push('  facet normal ' + [
                         n[0], n[1], n[2]
@@ -105,10 +125,10 @@ module.exports = {
                     str.push('    endloop');
                     str.push('  endfacet');
                 }
-            }
+            }*/
 
-            str.push('endsolid');
-            return str.join('\n');
+            /*str.push('endsolid');
+            return str.join('\n');*/
         } else {
 
             var count = obj.facets.length;
